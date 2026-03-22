@@ -1,0 +1,341 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>3D地球模型 | 个人作品集</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0B1026 0%, #0a0f22 100%);
+            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(11, 16, 38, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        /* Logo区域 */
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-svg {
+            width: 48px;
+            height: 48px;
+        }
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #3B82F6, #A855F7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* 导航链接 */
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            color: #3B82F6;
+        }
+
+        /* 主体内容 */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #fff, #3B82F6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            color: #94a3b8;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 3D地球卡片展示 */
+        .showcase {
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        .earth-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 30px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transition: transform 0.3s;
+        }
+        .earth-card:hover {
+            transform: translateY(-5px);
+        }
+        .earth-3d {
+            width: 280px;
+            height: 280px;
+        }
+        .card-title {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #3B82F6;
+        }
+
+        /* 技能/成就区域 */
+        .skills {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        .skills h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        .skill-card {
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(59,130,246,0.2);
+            transition: 0.3s;
+        }
+        .skill-card:hover {
+            border-color: #3B82F6;
+            background: rgba(59,130,246,0.1);
+        }
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .skill-card h3 {
+            margin-bottom: 10px;
+        }
+        .skill-card p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid rgba(59,130,246,0.2);
+            margin-top: 40px;
+            color: #64748b;
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                justify-content: center;
+                text-align: center;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .earth-3d {
+                width: 220px;
+                height: 220px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo-area">
+            <!-- 嵌入任务1生成的Logo SVG -->
+            <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <radialGradient id="logoGlow" cx="30%" cy="30%" r="70%">
+                        <stop offset="0%" stop-color="#3B82F6"/>
+                        <stop offset="100%" stop-color="#A855F7"/>
+                    </radialGradient>
+                    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#3B82F6"/>
+                        <stop offset="100%" stop-color="#A855F7"/>
+                    </linearGradient>
+                </defs>
+                <!-- 经纬网格地球 -->
+                <circle cx="50" cy="50" r="38" fill="none" stroke="url(#logoGrad)" stroke-width="1.2"/>
+                <!-- 经线 -->
+                <path d="M50 15 L50 85 M38 22 L62 78 M30 32 L70 68 M26 42 L74 58 M26 58 L74 42 M30 68 L70 32 M38 78 L62 22" stroke="url(#logoGrad)" stroke-width="1" fill="none"/>
+                <!-- 纬线 -->
+                <path d="M50 15 A28 18 0 0 1 50 15" fill="none" stroke="url(#logoGrad)" stroke-width="1"/>
+                <path d="M41 26 A22 14 0 0 1 59 26" fill="none" stroke="url(#logoGrad)" stroke-width="1"/>
+                <path d="M36 38 A32 20 0 0 1 64 38" fill="none" stroke="url(#logoGrad)" stroke-width="1"/>
+                <path d="M34 50 A36 22 0 0 1 66 50" fill="none" stroke="url(#logoGrad)" stroke-width="1"/>
+                <path d="M36 62 A32 20 0 0 1 64 62" fill="none" stroke="url(#logoGrad)" stroke-width="1"/>
+                <path d="M41 74 A22 14 0 0 1 59 74" fill="none" stroke="url(#logoGrad)" stroke-width="1"/>
+                <path d="M50 85 A28 18 0 0 1 50 85" fill="none" stroke="url(#logoGrad)" stroke-width="1"/>
+                <!-- 漂浮方块（3D模型感） -->
+                <rect x="68" y="28" width="5" height="5" fill="url(#logoGrad)" opacity="0.8" transform="rotate(15 70.5 30.5)"/>
+                <rect x="28" y="68" width="4" height="4" fill="url(#logoGrad)" opacity="0.8" transform="rotate(30 30 70)"/>
+                <rect x="75" y="68" width="3.5" height="3.5" fill="url(#logoGrad)" opacity="0.8" transform="rotate(45 76.75 69.75)"/>
+                <circle cx="50" cy="50" r="2" fill="white" opacity="0.7"/>
+            </svg>
+            <span class="logo-text">3D Earth Studio</span>
+        </div>
+        <div class="nav-links">
+            <a href=" ">首页</a >
+            <a href="#">作品</a >
+            <a href="#">关于</a >
+        </div>
+    </nav>
+
+    <main>
+        <div class="hero">
+            <h1>探索3D地球模型</h1>
+            <p>用Web技术构建的交互式3D地球展示 | 实时渲染 | 沉浸式体验</p >
+        </div>
+
+        <div class="showcase">
+            <div class="earth-card">
+                <!-- 3D地球模型展示（使用Canvas绘制动态球体） -->
+                <canvas id="earthCanvas" class="earth-3d" width="280" height="280"></canvas>
+                <div class="card-title">🌍 3D 动态地球模型</div>
+            </div>
+        </div>
+
+        <div class="skills">
+            <h2>✨ 我的技能与成就</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">🌐</div>
+                    <h3>WebGL / Three.js</h3>
+                    <p>精通3D场景搭建与实时渲染</p >
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">📱</div>
+                    <h3>响应式设计</h3>
+                    <p>完美适配手机/平板/电脑</p >
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🚀</div>
+                    <h3>AI辅助开发</h3>
+                    <p>熟练运用AI工具提升效率</p >
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🏆</div>
+                    <h3>3D建模大赛一等奖</h3>
+                    <p>2025年校级数字媒体竞赛</p >
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 3D Earth Studio | 基于Three.js构建 | 个人作品集展示</p >
+    </footer>
+
+    <script>
+        // 使用Canvas绘制一个简单的3D地球效果（带经纬网格和渐变）
+        const canvas = document.getElementById('earthCanvas');
+        const ctx = canvas.getContext('2d');
+        let angle = 0;
+
+        function drawEarth() {
+            const w = canvas.width;
+            const h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            
+            // 绘制外发光
+            ctx.shadowBlur = 20;
+            ctx.shadowColor = '#3B82F6';
+            
+            // 绘制地球主体（径向渐变）
+            const gradient = ctx.createRadialGradient(w*0.35, h*0.35, 20, w*0.5, h*0.5, w*0.45);
+            gradient.addColorStop(0, '#2a6f8f');
+            gradient.addColorStop(0.5, '#1a4a6a');
+            gradient.addColorStop(1, '#0a2a3a');
+            ctx.beginPath();
+            ctx.arc(w/2, h/2, w*0.42, 0, Math.PI*2);
+            ctx.fillStyle = gradient;
+            ctx.fill();
+            
+            // 绘制经纬网格（模拟3D旋转效果）
+            ctx.strokeStyle = '#3B82F6';
+            ctx.lineWidth = 1.5;
+            ctx.shadowBlur = 5;
+            
+            // 经线（根据angle产生旋转感）
+            for(let i = 0; i < 12; i++) {
+                const lonAngle = (i * 30 + angle) * Math.PI / 180;
+                const x1 = w/2 + Math.sin(lonAngle) * w*0.42;
+                const y1 = h/2 + Math.cos(lonAngle) * w*0.18;
+                const x2 = w/2 + Math.sin(lonAngle) * w*0.42;
+                const y2 = h/2 - Math.cos(lonAngle) * w*0.18;
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+            }
+            
+            // 纬线
+            for(let i = 1; i <= 4; i++) {
+                const latRadius = w*0.42 * Math.sin(i * 25 * Math.PI/180);
+                const latY = h/2 - w*0.42 * Math.cos(i * 25 * Math.PI/180);
+                ctx.beginPath();
+                ctx.ellipse(w/2, latY, latRadius, latRadius*0.35, 0, 0, Math.PI*2);
+                ctx.stroke();
+            }
+            
+            // 绘制大陆轮廓点（装饰）
+            ctx.fillStyle = '#A855F7';
+            const continents = [[0.65,0.45], [0.35,0.55], [0.5,0.7], [0.7,0.6], [0.45,0.3]];
+            continents.forEach(pos => {
+                ctx.beginPath();
+                ctx.arc(w*pos[0], h*pos[1], 3, 0, Math.PI*2);
+                ctx.fillStyle = '#A855F7';
+                ctx.fill();
+            });
+            
+            ctx.shadowBlur = 0;
+            angle += 1;
+            requestAnimationFrame(drawEarth);
+        }
+        
+        drawEarth();
+    </script>
+</body>
+</html>
+```
